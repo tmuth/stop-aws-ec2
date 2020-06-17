@@ -34,6 +34,7 @@ def lambda_handler(event, context):
         try:
             ec2 = boto3.client('ec2', region_name=region)
             ec2.stop_instances(InstanceIds=instanceList)
+            RunningInstances.append('Stopped instances')
         except:
             RunningInstances.append('Error in stopping instances')
             pass
@@ -42,6 +43,7 @@ def lambda_handler(event, context):
         RunningInstances.append('No running instances')
     
     instanceJSON = json.dumps(RunningInstances)
+    print(instanceJSON)
     return {
         "statusCode": 200,
         "body": instanceJSON
